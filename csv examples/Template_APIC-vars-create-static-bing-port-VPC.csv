@@ -1,0 +1,7 @@
+tenant,ap,epg,leaf,port,vlan-encap
+Allyson_LAB,AP-APP,EPG-App_1,1001-1002,ports-10,10
+Allyson_LAB,AP-APP,EPG-App_2,1001-1002,ports-11,11
+Allyson_LAB,AP-APP,EPG-App_3,1001-1002,ports-12,12
+Allyson_LAB,AP-WEB,EPG-Web_1,1001-1002,ports-20,20
+Allyson_LAB,AP-WEB,EPG-Web_2,1001-1002,ports-21,21
+Allyson_LAB,AP-WEB,EPG-Web_3,1001-1002,ports-22,22

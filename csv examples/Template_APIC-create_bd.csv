@@ -1,0 +1,7 @@
+tenant,bd,vrf
+Allyson_LAB,BD-App_1,VRF-Allyson_LAB
+Allyson_LAB,BD-App_2,VRF-Allyson_LAB
+Allyson_LAB,BD-App_3,VRF-Allyson_LAB
+Allyson_LAB,BD-Web_1,VRF-Allyson_LAB
+Allyson_LAB,BD-Web_2,VRF-Allyson_LAB
+Allyson_LAB,BD-Web_3,VRF-Allyson_LAB
