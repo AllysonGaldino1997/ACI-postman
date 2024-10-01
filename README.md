@@ -11,14 +11,14 @@ O **Cisco ACI** é uma solução poderosa para gerenciar redes de data centers, 
 
 Este repositório cobre os seguintes tópicos:
 
-Criação Tenants
-Criação Bridge Domain
-Criação Bridge Domain com Subnet
-Vincular Domain a EPG
-Criação Application Profile
-Criação EPG
-Vincular EPG a interface VPC
-Vincular EPG a interface individual
+- Criação Tenants
+- Criação Bridge Domain
+- Criação Bridge Domain com Subnet
+- Vincular Physical Domain a EPG
+- Criação Application Profile
+- Criação EPG
+- Vincular EPG a interface VPC
+- Vincular EPG a interface individual
 
 ## Pré-requisitos
 
