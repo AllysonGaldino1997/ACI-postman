@@ -18,7 +18,7 @@ Este repositório cobre os seguintes tópicos:
 - Criação Application Profile
 - Criação EPG
 - Static Bind EPG interface VPC
-- Static Bind a interface individual
+- Static Bind EPG interface individual
 
 ## Pré-requisitos
 
