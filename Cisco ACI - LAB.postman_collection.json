@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "0eb0f502-0998-409a-a125-dd95d6fef5f4",
+		"name": "Cisco ACI - LAB",
+		"description": "Autor: Allyson Galdino da Silva\n\nData: 01/10/2024",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10838589"
+	},
+	"item": [
+		{
+			"name": "APIC Login",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"aaaUser\":{\n    \"attributes\":{\n      \"name\":\"{{username}}\",\n      \"pwd\":\"{{password}}\"\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/aaaLogin.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"aaaLogin.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Create Tenant",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"fvTenant\":{\"attributes\":{\"dn\":\"uni/tn-{{tenant}}\",\"name\":\"{{tenant}}\",\"rn\":\"tn-{{tenant}}\",\"status\":\"created\"},\"children\":[]}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Create BD",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"fvBD\":{\r\n      \"attributes\":{\r\n         \"dn\":\"uni/tn-{{tenant}}/BD-{{bd}}\",\r\n         \"mac\":\"00:22:BD:F8:19:FF\",\r\n         \"arpFlood\":\"true\",\r\n         \"name\":\"{{bd}}\",\r\n         \"unicastRoute\":\"false\",\r\n         \"epMoveDetectMode\":\"garp\",\r\n         \"rn\":\"BD-{{bd}}\",\r\n         \"status\":\"created\"\r\n      },\r\n      \"children\":[\r\n         {\r\n            \"fvRsCtx\":{\r\n               \"attributes\":{\r\n                  \"tnFvCtxName\":\"{{vrf}}\",\r\n                  \"status\":\"created,modified\"\r\n               },\r\n               \"children\":[\r\n                  \r\n               ]\r\n            }\r\n         }\r\n      ]\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/BD-{{bd}}.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"BD-{{bd}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Create BD with subnet",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"fvBD\":{\r\n      \"attributes\":{\r\n         \"dn\":\"uni/tn-{{tenant}}/BD-{{bd}}\",\r\n         \"mac\":\"00:22:BD:F8:19:FF\",\r\n         \"arpFlood\":\"true\",\r\n         \"name\":\"{{bd}}\",\r\n         \"epMoveDetectMode\":\"garp\",\r\n         \"rn\":\"BD-{{bd}}\",\r\n         \"status\":\"created\"\r\n      },\r\n      \"children\":[\r\n         {\r\n            \"fvSubnet\":{\r\n               \"attributes\":{\r\n                  \"dn\":\"uni/tn-{{tenant}}/BD-{{bd}}/subnet-[{{subnet}}]\",\r\n                  \"ctrl\":\"\",\r\n                  \"ip\":\"{{subnet}}\",\r\n                  \"rn\":\"subnet-[{{subnet}}]\",\r\n                  \"status\":\"created\"\r\n               },\r\n               \"children\":[\r\n                  \r\n               ]\r\n            }\r\n         },\r\n         {\r\n            \"fvRsCtx\":{\r\n               \"attributes\":{\r\n                  \"tnFvCtxName\":\"{{vrf}}\",\r\n                  \"status\":\"created,modified\"\r\n               },\r\n               \"children\":[\r\n                  \r\n               ]\r\n            }\r\n         }\r\n      ]\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/BD-{{bd}}.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"BD-{{bd}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Add domain in EPG",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"fvRsDomAtt\":{\r\n      \"attributes\":{\r\n         \"resImedcy\":\"immediate\",\r\n         \"tDn\":\"uni/phys-{{phy-domain}}\",\r\n         \"status\":\"created\"\r\n      },\r\n      \"children\":[\r\n         \r\n      ]\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"ap-{{ap}}",
+						"epg-{{epg}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Create Application",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"fvAp\":{\r\n      \"attributes\":{\r\n         \"dn\":\"uni/tn-{{tenant}}/ap-{{ap}}\",\r\n         \"name\":\"{{ap}}\",\r\n         \"rn\":\"ap-{{ap}}\",\r\n         \"status\":\"created\"\r\n      },\r\n      \"children\":[\r\n         \r\n      ]\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/ap-{{ap}}.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"ap-{{ap}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Create EPG",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"fvAEPg\":{\r\n      \"attributes\":{\r\n         \"dn\":\"uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}\",\r\n         \"name\":\"{{epg}}\",\r\n         \"rn\":\"epg-{{epg}}\",\r\n         \"status\":\"created\"\r\n      },\r\n      \"children\":[\r\n         {\r\n            \"fvRsBd\":{\r\n               \"attributes\":{\r\n                  \"tnFvBDName\":\"{{bd}}\",\r\n                  \"status\":\"created,modified\"\r\n               },\r\n               \"children\":[\r\n                  \r\n               ]\r\n            }\r\n         }\r\n      ]\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}.json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"ap-{{ap}}",
+						"epg-{{epg}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Static bind port VPC",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fvRsPathAtt\":{\n\t   \"attributes\":{\n\t\t  \"dn\":\"uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}/rspathAtt-[topology/pod-1/protpaths-{{leaf}}/pathep-[Switch{{leaf}}_1-{{port}}_PolGrp]]\",\n\t\t  \"encap\":\"vlan-{{vlan-encap}}\",\n\t\t  \"instrImedcy\":\"immediate\",\n\t\t  \"tDn\":\"topology/pod-1/protpaths-{{leaf}}/pathep-[Switch{{leaf}}_1-{{port}}_PolGrp]\",\n\t\t  \"rn\":\"rspathAtt-[topology/pod-1/protpaths-{{leaf}}/pathep-[Switch{{leaf}}_1-{{port}}_PolGrp]]\",\n\t\t  \"status\":\"created\"\n\t   },\n\t   \"children\":[\n\t\t  \n\t   ]\n\t}\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}/rspathAtt-[topology/pod-1/protpaths-{{leaf}}/pathep-[Switch{{leaf}}_1-{{port}}_PolGrp]].json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"ap-{{ap}}",
+						"epg-{{epg}}",
+						"rspathAtt-[topology",
+						"pod-1",
+						"protpaths-{{leaf}}",
+						"pathep-[Switch{{leaf}}_1-{{port}}_PolGrp]].json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST APIC Static bind port Individual Copy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/xml",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fvRsPathAtt\":{\n\t   \"attributes\":{\n\t\t  \"dn\":\"uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}/rspathAtt-[topology/pod-1/paths-{{leaf}}/pathep-[{{port}}]]\",\n\t\t  \"encap\":\"vlan-{{vlan_encap}}\",\n\t\t  \"instrImedcy\":\"immediate\",\n\t\t  \"tDn\":\"topology/pod-1/paths-{{leaf}}/pathep-[{{port}}]\",\n\t\t  \"rn\":\"rspathAtt-[topology/pod-1/paths-{{leaf}}/pathep-[{{port}}]]\",\n\t\t  \"status\":\"created\"\n\t   },\n\t   \"children\":[\n\t\t  \n\t   ]\n\t}\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{hostname}}/api/node/mo/uni/tn-{{tenant}}/ap-{{ap}}/epg-{{epg}}/rspathAtt-[topology/pod-1/paths-{{leaf}}/pathep-[{{port}}]].json",
+					"protocol": "https",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"api",
+						"node",
+						"mo",
+						"uni",
+						"tn-{{tenant}}",
+						"ap-{{ap}}",
+						"epg-{{epg}}",
+						"rspathAtt-[topology",
+						"pod-1",
+						"paths-{{leaf}}",
+						"pathep-[{{port}}]].json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
