@@ -17,8 +17,8 @@ Este repositório cobre os seguintes tópicos:
 - Vincular Physical Domain a EPG
 - Criação Application Profile
 - Criação EPG
-- Vincular EPG a interface VPC
-- Vincular EPG a interface individual
+- Static Bind EPG interface VPC
+- Static Bind a interface individual
 
 ## Pré-requisitos
 
